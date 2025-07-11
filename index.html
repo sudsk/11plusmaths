@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>11+ Mathematics Practice Sets</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .sets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .set-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .set-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+        }
+
+        .set-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .set-number {
+            display: inline-block;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        .set-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .set-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .topics-list {
+            margin-bottom: 25px;
+        }
+
+        .topics-list h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .topic-tag {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+
+        .set-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .set-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .set-button.disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .set-button.disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .status {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .status.available {
+            background: rgba(46, 204, 113, 0.1);
+            color: #27ae60;
+        }
+
+        .status.coming-soon {
+            background: rgba(241, 196, 15, 0.1);
+            color: #f39c12;
+        }
+
+        .footer {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .footer h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .footer p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .stats {
+                gap: 15px;
+            }
+            
+            .stat-item {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+            
+            .sets-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>11+ Mathematics Practice Sets</h1>
+            <p>Comprehensive exam preparation with challenging problems covering all key topics</p>
+            <div class="stats">
+                <div class="stat-item">100 Problems per Set</div>
+                <div class="stat-item">Mixed Difficulty Levels</div>
+                <div class="stat-item">Complete Solutions</div>
+                <div class="stat-item">Visual Diagrams</div>
+            </div>
+        </div>
+
+        <div class="sets-grid">
+            <!-- Set 1 -->
+            <div class="set-card">
+                <div class="status available">Available</div>
+                <div class="set-number">SET 1</div>
+                <h2 class="set-title">Foundation & Mixed Problems</h2>
+                <p class="set-description">
+                    A comprehensive collection of 100 challenging problems covering fundamental topics. 
+                    Perfect for building strong mathematical foundations and problem-solving skills.
+                </p>
+                <div class="topics-list">
+                    <h4>Key Topics</h4>
+                    <div class="topics">
+                        <span class="topic-tag">Word Problems</span>
+                        <span class="topic-tag">Algebra</span>
+                        <span class="topic-tag">Geometry</span>
+                        <span class="topic-tag">Angles</span>
+                        <span class="topic-tag">Fractions</span>
+                        <span class="topic-tag">Percentages</span>
+                        <span class="topic-tag">Ratios</span>
+                        <span class="topic-tag">Speed & Time</span>
+                        <span class="topic-tag">Area & Volume</span>
+                        <span class="topic-tag">Circle Theorems</span>
+                    </div>
+                </div>
+                <a href="maths_set_1_100_questions.html" class="set-button">Start Set 1</a>
+            </div>
+
+            <!-- Set 2 -->
+            <div class="set-card">
+                <div class="status coming-soon">Coming Soon</div>
+                <div class="set-number">SET 2</div>
+                <h2 class="set-title">Advanced Problem Solving</h2>
+                <p class="set-description">
+                    Advanced mathematical challenges focusing on complex problem-solving strategies, 
+                    multi-step calculations, and higher-level reasoning skills.
+                </p>
+                <div class="topics-list">
+                    <h4>Key Topics</h4>
+                    <div class="topics">
+                        <span class="topic-tag">Advanced Algebra</span>
+                        <span class="topic-tag">Complex Geometry</span>
+                        <span class="topic-tag">Probability</span>
+                        <span class="topic-tag">Statistics</span>
+                        <span class="topic-tag">Number Patterns</span>
+                        <span class="topic-tag">Simultaneous Equations</span>
+                        <span class="topic-tag">Coordinate Geometry</span>
+                        <span class="topic-tag">Transformations</span>
+                    </div>
+                </div>
+                <a href="#" class="set-button disabled">Coming Soon</a>
+            </div>
+
+            <!-- Set 3 -->
+            <div class="set-card">
+                <div class="status coming-soon">Coming Soon</div>
+                <div class="set-number">SET 3</div>
+                <h2 class="set-title">Exam Simulation & Speed</h2>
+                <p class="set-description">
+                    Timed practice sets designed to simulate real exam conditions. Focus on accuracy 
+                    under pressure and efficient problem-solving techniques.
+                </p>
+                <div class="topics-list">
+                    <h4>Key Topics</h4>
+                    <div class="topics">
+                        <span class="topic-tag">Timed Challenges</span>
+                        <span class="topic-tag">Mental Math</span>
+                        <span class="topic-tag">Quick Calculations</span>
+                        <span class="topic-tag">Estimation</span>
+                        <span class="topic-tag">Pattern Recognition</span>
+                        <span class="topic-tag">Logic Puzzles</span>
+                        <span class="topic-tag">Data Interpretation</span>
+                        <span class="topic-tag">Graph Reading</span>
+                    </div>
+                </div>
+                <a href="#" class="set-button disabled">Coming Soon</a>
+            </div>
+
+            <!-- Set 4 -->
+            <div class="set-card">
+                <div class="status coming-soon">Coming Soon</div>
+                <div class="set-number">SET 4</div>
+                <h2 class="set-title">Challenging Word Problems</h2>
+                <p class="set-description">
+                    Complex real-world scenarios requiring advanced mathematical reasoning. 
+                    Perfect for developing analytical thinking and application skills.
+                </p>
+                <div class="topics-list">
+                    <h4>Key Topics</h4>
+                    <div class="topics">
+                        <span class="topic-tag">Multi-step Problems</span>
+                        <span class="topic-tag">Real-world Applications</span>
+                        <span class="topic-tag">Business Math</span>
+                        <span class="topic-tag">Financial Calculations</span>
+                        <span class="topic-tag">Optimization</span>
+                        <span class="topic-tag">Measurement</span>
+                        <span class="topic-tag">Scale & Proportion</span>
+                        <span class="topic-tag">Scientific Notation</span>
+                    </div>
+                </div>
+                <a href="#" class="set-button disabled">Coming Soon</a>
+            </div>
+
+            <!-- Set 5 -->
+            <div class="set-card">
+                <div class="status coming-soon">Coming Soon</div>
+                <div class="set-number">SET 5</div>
+                <h2 class="set-title">Geometry & Spatial Reasoning</h2>
+                <p class="set-description">
+                    Comprehensive geometry problems with detailed diagrams. Focus on spatial 
+                    visualization, constructions, and advanced geometric relationships.
+                </p>
+                <div class="topics-list">
+                    <h4>Key Topics</h4>
+                    <div class="topics">
+                        <span class="topic-tag">3D Shapes</span>
+                        <span class="topic-tag">Surface Area</span>
+                        <span class="topic-tag">Complex Angles</span>
+                        <span class="topic-tag">Constructions</span>
+                        <span class="topic-tag">Similarity</span>
+                        <span class="topic-tag">Congruence</span>
+                        <span class="topic-tag">Loci</span>
+                        <span class="topic-tag">Bearings</span>
+                    </div>
+                </div>
+                <a href="#" class="set-button disabled">Coming Soon</a>
+            </div>
+
+            <!-- Set 6 -->
+            <div class="set-card">
+                <div class="status coming-soon">Coming Soon</div>
+                <div class="set-number">SET 6</div>
+                <h2 class="set-title">Final Exam Preparation</h2>
+                <p class="set-description">
+                    Ultimate preparation set combining the most challenging problems from all topics. 
+                    Designed for final review and confidence building before the actual exam.
+                </p>
+                <div class="topics-list">
+                    <h4>Key Topics</h4>
+                    <div class="topics">
+                        <span class="topic-tag">Mixed Review</span>
+                        <span class="topic-tag">Exam Strategies</span>
+                        <span class="topic-tag">Time Management</span>
+                        <span class="topic-tag">Error Analysis</span>
+                        <span class="topic-tag">Advanced Topics</span>
+                        <span class="topic-tag">Challenge Problems</span>
+                        <span class="topic-tag">Competition Style</span>
+                        <span class="topic-tag">Olympiad Prep</span>
+                    </div>
+                </div>
+                <a href="#" class="set-button disabled">Coming Soon</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <h3>How to Use These Practice Sets</h3>
+            <p><strong>Step 1:</strong> Start with Set 1 to build foundational skills</p>
+            <p><strong>Step 2:</strong> Work through problems methodically, checking answers</p>
+            <p><strong>Step 3:</strong> Review mistakes and understand solution methods</p>
+            <p><strong>Step 4:</strong> Progress through sets as they become available</p>
+            <p><strong>Step 5:</strong> Use Set 6 for final exam preparation</p>
+            <br>
+            <p style="color: #666; font-style: italic;">
+                Each set contains 100 carefully crafted problems with complete solutions. 
+                Perfect for independent study or classroom use.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
